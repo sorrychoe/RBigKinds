@@ -6,13 +6,15 @@
 #' @export
 header_remover <- function(df) {
   if (is.data.frame(df)) {
-    ans <- gsub("\\[[^)]*\\]", "", df$제목)
+    ans <- gsub("\\[[^)]*\\]", "", df$`제목`)
+    df$`제목` <- ans
+    return(df)
   } else if (is.list(df)) {
     ans <- gsub("\\[[^)]*\\]", "", df)
+    return(ans)
   } else {
     stop("input value is to be have to list or DataFrame")
   }
-  return(ans)
 }
 
 #' 키워드를 list로 변환
@@ -23,7 +25,7 @@ header_remover <- function(df) {
 #' @export
 keyword_list <- function(df) {
   if (is.data.frame(df)) {
-    return(df$키워드)
+    return(df$`키워드`)
   } else if (is.list(df)) {
     return(df)
   } else {
@@ -112,7 +114,7 @@ counter_to_dataframe <- function(key_words) {
   if (is.list(key_words)) {
     word_df <- data.frame(matrix(unlist(key_words), ncol = 2, byrow = TRUE))
     colnames(word_df) <- c("단어", "빈도")
-    word_df <- word_df[order(word_df$빈도, decreasing = TRUE), , drop = FALSE, ]
+    word_df <- word_df[order(word_df$`빈도`, decreasing = TRUE), , drop = FALSE, ]
     rownames(word_df) <- NULL
     return(word_df)
   } else {
