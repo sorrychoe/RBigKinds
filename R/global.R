@@ -104,7 +104,7 @@ word_counter <- function(news_value) {
 }
 
 
-#' counter dict --> dataframe
+#' counter dict를 dataframe으로 변환
 #'
 #'
 #' @param infile Path to the input file
@@ -119,5 +119,101 @@ counter_to_dataframe <- function(key_words) {
     return(word_df)
   } else {
     stop("input type is to be have to dict")
+  }
+}
+
+#' df to Keyword_dataframe
+#'
+#'
+#' @param df BigKinds 원본 문서
+#' @return 키워드 데이터프레임으로 변환
+#' @export
+keyword_dataframe <- function(df) {
+  if (is.data.frame(df)) {
+    lis <- keyword_list(df)
+    keywords <- keyword_parser(lis)
+    counter <- word_counter(keywords)
+    df <- counter_to_dataframe(counter)
+    return(df)
+  } else {
+    stop("input type is to be have to DataFrame")
+  }
+}
+
+#' df to Keyword_dataframe of removed duplicated
+#'
+#'
+#' @param df BigKinds 원본 문서
+#' @return 키워드 데이터프레임으로 변환
+#' @export
+keyword_dataframe_no_duplicated <- function(df) {
+  if (is.data.frame(df)) {
+    lis <- keyword_list(df)
+    keywords <- keyword_parser(lis)
+    keywords_set <- duplication_remover(keywords)
+    counter <- word_counter(keywords_set)
+    df <- counter_to_dataframe(counter)
+    return(df)
+  } else {
+    stop("input type is to be have to DataFrame")
+  }
+}
+
+#' get tf-idf score
+#'
+#'
+#' @param df BigKinds 원본 문서
+#' @return tfidf 데이터프레임으로 변환
+#' @export
+tfidf <- function(df, ...) {
+  if (is.data.frame(df)) {
+    if (length(...) > 0 && is.character(...)) {
+      df <- df[, ...]
+    }
+    lis <- keyword_list(df)
+    tfidfv <- DocumentTermMatrix(Corpus(VectorSource(lis)), control = list(weighting = weightTfIdf))
+    word_count <- data.frame(
+      단어 = colnames(tfidfv),
+      빈도 = colSums(as.matrix(tfidfv))
+    ) %>%
+      arrange(desc(빈도)) %>%
+      mutate(index = row_number()) %>%
+      select(-index)
+    return(word_count)
+  } else {
+    stop("input type is to be have to DataFrame")
+  }
+}
+
+#' change to tf-idf vector
+#'
+#'
+#' @param df BigKinds 원본 문서
+#' @return tfidf vector로 변환
+#' @export
+tfidf_vector <- function(df) {
+  if (is.data.frame(df)) {
+    lis <- keyword_list(df)
+    dtm <- DocumentTermMatrix(Corpus(VectorSource(lis)))
+    tdm <- weightTfIdf(dtm)
+    vec <- as.matrix(tdm)
+    return(vec)
+  } else {
+    stop("input type is to be have to DataFrame")
+  }
+}
+
+#' 벡터 정규화
+#'
+#'
+#' @param df tfidf vector
+#' @return 정규화 벡터로 전환
+#' @export
+normalize_vector <- function(vec) {
+  if (is.matrix(vec)) {
+    vec_nor <- t(normalize(t(vec)))
+    return(vec_nor)
+  } else {
+    stop("input type is to be have to matrix")
   }
 }
