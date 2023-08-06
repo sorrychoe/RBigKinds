@@ -9,118 +9,31 @@ header_remover <- function(df) {
     ans <- gsub("\\[[^)]*\\]", "", df$`제목`)
     df$`제목` <- ans
     return(df)
-  } else if (is.list(df)) {
-    ans <- gsub("\\[[^)]*\\]", "", df)
-    return(ans)
   } else {
     stop("input value is to be have to list or DataFrame")
   }
 }
 
-#' 키워드를 list로 변환
+#' tokenizer
 #'
-#'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @param df BigKinds 원본 문서
+#' @return 키워드 데이터프레임으로 변환
 #' @export
-keyword_list <- function(df) {
+word_tokenizer <- function(df) {
   if (is.data.frame(df)) {
-    return(df$`키워드`)
-  } else if (is.list(df)) {
-    return(df)
+    df |> 
+      select(`제목`,`키워드`) |> 
+      rowid_to_column() |> 
+      unnest_tokens(
+        input = "키워드",
+        output = "키워드"
+      ) -> keywords
+    return(keywords)
   } else {
     stop("input value is to be have to list or DataFrame")
   }
 }
 
-#' [] 키워드 파싱
-#'
-#'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
-#' @export
-keyword_parser <- function(text_list) {
-  if (is.list(text_list)) {
-    news_key <- list()
-    for (word in text_list) {
-      if (is.character(word)) {
-        word <- strsplit(word, ",")[[1]]
-        news_key <- c(news_key, list(word))
-      } else {
-        stop("input list is not valid format")
-      }
-    }
-    return(news_key)
-  } else {
-    stop("input type is to be have to list")
-  }
-}
-
-#' 중복 값 제거
-#'
-#'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
-#' @export
-duplication_remover <- function(news_key) {
-  if (is.list(news_key)) {
-    news_value <- list()
-    for (j in news_key) {
-      if (is.list(j)) {
-        j <- unique(j)
-        news_value <- c(news_value, list(j))
-      } else {
-        stop("input list is not valid format")
-      }
-    }
-    return(news_value)
-  } else {
-    stop("input type is to be have to list")
-  }
-}
-
-#' 단어 갯수 카운트
-#'
-#'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
-#' @export
-word_counter <- function(news_value) {
-  if (is.list(news_value)) {
-    key_words <- list()
-    for (k in seq_along(news_value)) {
-      for (i in news_value[[k]]) {
-        if (!(i %in% names(key_words))) {
-          key_words[[i]] <- 1
-        } else {
-          key_words[[i]] <- key_words[[i]] + 1
-        }
-      }
-    }
-    return(key_words)
-  } else {
-    stop("input type is to be have to list")
-  }
-}
-
-
-#' counter dict를 dataframe으로 변환
-#'
-#'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
-#' @export
-counter_to_dataframe <- function(key_words) {
-  if (is.list(key_words)) {
-    word_df <- data.frame(matrix(unlist(key_words), ncol = 2, byrow = TRUE))
-    colnames(word_df) <- c("단어", "빈도")
-    word_df <- word_df[order(word_df$`빈도`, decreasing = TRUE), , drop = FALSE, ]
-    rownames(word_df) <- NULL
-    return(word_df)
-  } else {
-    stop("input type is to be have to dict")
-  }
-}
 
 #' df to Keyword_dataframe
 #'
@@ -130,11 +43,13 @@ counter_to_dataframe <- function(key_words) {
 #' @export
 keyword_dataframe <- function(df) {
   if (is.data.frame(df)) {
-    lis <- keyword_list(df)
-    keywords <- keyword_parser(lis)
-    counter <- word_counter(keywords)
-    df <- counter_to_dataframe(counter)
-    return(df)
+    data <- word_tokenizer(df) 
+    data |> 
+      group_by(키워드) |> 
+      tally() |> 
+      arrange(desc(n)) |> 
+      as_tibble() -> keywords
+    return(keywords)
   } else {
     stop("input type is to be have to DataFrame")
   }
@@ -148,12 +63,16 @@ keyword_dataframe <- function(df) {
 #' @export
 keyword_dataframe_no_duplicated <- function(df) {
   if (is.data.frame(df)) {
-    lis <- keyword_list(df)
-    keywords <- keyword_parser(lis)
-    keywords_set <- duplication_remover(keywords)
-    counter <- word_counter(keywords_set)
-    df <- counter_to_dataframe(counter)
-    return(df)
+    data <- word_tokenizer(df) 
+    
+    keywords_no_duplicated <- data[!duplicated(data[,c(2,3)]),]
+    
+    keywords_no_duplicated |> 
+      group_by(키워드) |> 
+      tally() |> 
+      arrange(desc(n)) |> 
+      as_tibble() -> return_keywords
+    return(return_keywords)
   } else {
     stop("input type is to be have to DataFrame")
   }
@@ -167,19 +86,10 @@ keyword_dataframe_no_duplicated <- function(df) {
 #' @export
 tfidf <- function(df, ...) {
   if (is.data.frame(df)) {
-    if (length(...) > 0 && is.character(...)) {
-      df <- df[, ...]
-    }
-    lis <- keyword_list(df)
-    tfidfv <- DocumentTermMatrix(Corpus(VectorSource(lis)), control = list(weighting = weightTfIdf))
-    word_count <- data.frame(
-      단어 = colnames(tfidfv),
-      빈도 = colSums(as.matrix(tfidfv))
-    ) %>%
-      arrange(desc(빈도)) %>%
-      mutate(index = row_number()) %>%
-      select(-index)
-    return(word_count)
+    data <- word_tokenizer(df) 
+    data |>
+      bind_tf_idf(term = `키워드`, document = `제목`, n = rowid) -> tfidf
+    return(tfidf)
   } else {
     stop("input type is to be have to DataFrame")
   }
@@ -193,8 +103,9 @@ tfidf <- function(df, ...) {
 #' @export
 tfidf_vector <- function(df) {
   if (is.data.frame(df)) {
-    lis <- keyword_list(df)
-    dtm <- DocumentTermMatrix(Corpus(VectorSource(lis)))
+    data <- word_tokenizer(df) 
+    
+    dtm <- DocumentTermMatrix(Corpus(VectorSource(data$키워드)))
     tdm <- weightTfIdf(dtm)
     vec <- as.matrix(tdm)
     return(vec)
@@ -216,4 +127,7 @@ normalize_vector <- function(vec) {
   } else {
     stop("input type is to be have to matrix")
   }
+}
+normalize <- function(x, na.rm = TRUE) {
+  return((x- min(x)) /(max(x)-min(x)))
 }
