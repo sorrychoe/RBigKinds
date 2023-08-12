@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{word_tokenizer}
 \alias{word_tokenizer}
-\title{tokenizer}
+\title{word_tokenizer}
 \usage{
 word_tokenizer(df)
 }
 \arguments{
 \item{df}{BigKinds 원본 문서}
 }
-\value{
-키워드 데이터프레임으로 변환
-}
 \description{
-tokenizer
+파일로부터 문서 별 키워드로 나열된 데이터 프레임으로 변환합니다.
+}
+\examples{
+data <- word_tokenizer(df)
+view(data)
 }

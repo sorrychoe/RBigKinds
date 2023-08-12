@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{header_remover}
 \alias{header_remover}
-\title{[] 표시된 헤더 삭제}
+\title{header_remover}
 \usage{
 header_remover(df)
 }
 \arguments{
-\item{infile}{Path to the input file}
-}
-\value{
-A matrix of the infile
+\item{df}{BigKinds 원본 문서}
 }
 \description{
-[] 표시된 헤더 삭제
+상단에 존재하는 헤더를 제거합니다.
+}
+\examples{
+data <- header_remover(df)
+head(data)
 }

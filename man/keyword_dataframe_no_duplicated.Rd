@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{keyword_dataframe_no_duplicated}
 \alias{keyword_dataframe_no_duplicated}
-\title{df to Keyword_dataframe of removed duplicated}
+\title{keyword_dataframe_no_duplicated}
 \usage{
 keyword_dataframe_no_duplicated(df)
 }
 \arguments{
 \item{df}{BigKinds 원본 문서}
 }
-\value{
-키워드 데이터프레임으로 변환
-}
 \description{
-df to Keyword_dataframe of removed duplicated
+BigKinds 데이터 셋을 키워드 갯수 데이터프레임(중복 미포함)으로 변환합니다.
+}
+\examples{
+data <- keyword_dataframe_no_duplicated(df)
+view(data)
 }

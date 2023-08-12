@@ -2,16 +2,13 @@
 % Please edit documentation in R/global.R
 \name{normalize_vector}
 \alias{normalize_vector}
-\title{벡터 정규화}
+\title{normalize_vector}
 \usage{
 normalize_vector(vec)
 }
 \arguments{
-\item{df}{tfidf vector}
-}
-\value{
-정규화 벡터로 전환
+\item{vec}{tfidf vector}
 }
 \description{
-벡터 정규화
+벡터를 정규화합니다.(row 기준 minmax scaling)
 }

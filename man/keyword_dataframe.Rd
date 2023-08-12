@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{keyword_dataframe}
 \alias{keyword_dataframe}
-\title{df to Keyword_dataframe}
+\title{keyword_dataframe}
 \usage{
 keyword_dataframe(df)
 }
 \arguments{
 \item{df}{BigKinds 원본 문서}
 }
-\value{
-키워드 데이터프레임으로 변환
-}
 \description{
-df to Keyword_dataframe
+BigKinds 데이터 셋을 키워드 갯수 데이터프레임으로 변환합니다.
+}
+\examples{
+data <- keyword_dataframe(df)
+view(data)
 }

@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{tfidf_vector}
 \alias{tfidf_vector}
-\title{change to tf-idf vector}
+\title{tfidf}
 \usage{
 tfidf_vector(df)
 }
 \arguments{
 \item{df}{BigKinds 원본 문서}
 }
-\value{
-tfidf vector로 변환
-}
 \description{
-change to tf-idf vector
+tfidf vector로 변환합니다.
+}
+\examples{
+data <- tfidf_vector(df)
+view(data)
 }

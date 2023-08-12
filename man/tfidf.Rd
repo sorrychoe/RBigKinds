@@ -2,16 +2,17 @@
 % Please edit documentation in R/global.R
 \name{tfidf}
 \alias{tfidf}
-\title{get tf-idf score}
+\title{tfidf}
 \usage{
-tfidf(df, ...)
+tfidf(df)
 }
 \arguments{
 \item{df}{BigKinds 원본 문서}
 }
-\value{
-tfidf 데이터프레임으로 변환
-}
 \description{
-get tf-idf score
+키워드의 tfidf score를 포함한 데이터 프레임을 반환합니다.
+}
+\examples{
+data <- tfidf(df)
+view(data)
 }
