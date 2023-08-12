@@ -1,15 +1,10 @@
-lda <- function(dataframe, k = 10, train = 100, fit = 10) {
+lda <- function(dataframe, k = 10) {
   if (is.data.frame(dataframe)) {
-    lis <- keyword_parser(keyword_list(dataframe))
-    model <- LDA(lis, k = k)
-    
-    for (words in lis) {
-      model$add.documents(words)
-    }
-    
-    for (i in seq(0, train, fit)) {
-      model$train(fit)
-    }
+    data <- word_tokenizer(dataframe)
+    data <- data |> 
+      count(키워드, 제목) |> 
+      cast_dtm(키워드, 제목, n)
+    model <- LDA(data, k = k)
     
     return(model)
   } else {
