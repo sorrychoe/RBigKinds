@@ -1,8 +1,12 @@
-#' [] 표시된 헤더 삭제
+#' header_remover
 #'
+#' 상단에 존재하는 헤더를 제거합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- header_remover(df)
+#' head(data)
 #' @export
 header_remover <- function(df) {
   if (is.data.frame(df)) {
@@ -14,10 +18,18 @@ header_remover <- function(df) {
   }
 }
 
-#' tokenizer
+#' word_tokenizer
 #'
+#' 파일로부터 문서 별 키워드로 나열된 데이터 프레임으로 변환합니다.
+#' 
 #' @param df BigKinds 원본 문서
-#' @return 키워드 데이터프레임으로 변환
+#'
+#' @examples
+#' data <- word_tokenizer(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
 word_tokenizer <- function(df) {
   if (is.data.frame(df)) {
@@ -35,11 +47,18 @@ word_tokenizer <- function(df) {
 }
 
 
-#' df to Keyword_dataframe
+#' keyword_dataframe
 #'
-#'
+#' BigKinds 데이터 셋을 키워드 갯수 데이터프레임으로 변환합니다.
+#' 
 #' @param df BigKinds 원본 문서
-#' @return 키워드 데이터프레임으로 변환
+#'
+#' @examples
+#' data <- keyword_dataframe(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
 keyword_dataframe <- function(df) {
   if (is.data.frame(df)) {
@@ -55,11 +74,18 @@ keyword_dataframe <- function(df) {
   }
 }
 
-#' df to Keyword_dataframe of removed duplicated
+#' keyword_dataframe_no_duplicated
 #'
-#'
+#' BigKinds 데이터 셋을 키워드 갯수 데이터프레임(중복 미포함)으로 변환합니다.
+#' 
 #' @param df BigKinds 원본 문서
-#' @return 키워드 데이터프레임으로 변환
+#'
+#' @examples
+#' data <- keyword_dataframe_no_duplicated(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
 keyword_dataframe_no_duplicated <- function(df) {
   if (is.data.frame(df)) {
@@ -78,13 +104,21 @@ keyword_dataframe_no_duplicated <- function(df) {
   }
 }
 
-#' get tf-idf score
+#' tfidf
 #'
-#'
+#' 키워드의 tfidf score를 포함한 데이터 프레임을 반환합니다.
+#' 
 #' @param df BigKinds 원본 문서
-#' @return tfidf 데이터프레임으로 변환
+#'
+#' @examples
+#' data <- tfidf(df)
+#' view(data)
+#' @import tf
+#' @import tibble
+#' @import dplyr
+#' @import tidytext
 #' @export
-tfidf <- function(df, ...) {
+tfidf <- function(df) {
   if (is.data.frame(df)) {
     data <- word_tokenizer(df) 
     data |>
@@ -95,11 +129,19 @@ tfidf <- function(df, ...) {
   }
 }
 
-#' change to tf-idf vector
+#' tfidf
 #'
-#'
+#' tfidf vector로 변환합니다.
+#' 
 #' @param df BigKinds 원본 문서
-#' @return tfidf vector로 변환
+#'
+#' @examples
+#' data <- tfidf_vector(df)
+#' view(data)
+#' @import tf
+#' @import tibble
+#' @import dplyr
+#' @import tidytext
 #' @export
 tfidf_vector <- function(df) {
   if (is.data.frame(df)) {
@@ -114,11 +156,12 @@ tfidf_vector <- function(df) {
   }
 }
 
-#' 벡터 정규화
+#' normalize_vector
 #'
+#' 벡터를 정규화합니다.(row 기준 minmax scaling)
 #'
-#' @param df tfidf vector
-#' @return 정규화 벡터로 전환
+#' @param vec tfidf vector
+#'
 #' @export
 normalize_vector <- function(vec) {
   if (is.matrix(vec)) {
