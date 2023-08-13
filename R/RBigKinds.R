@@ -12,12 +12,3 @@ NULL
 # devtools::use_package("rmarkdown","Suggests")
 # devtools::use_package("testthat","Suggests")
 #
-# ### Preprocessing
-# devtools::use_package("dplyr","Imports")
-# devtools::use_package("rvest","Imports")
-#
-# ### Import
-# devtools::use_package("readxl", "Imports")
-#
-# ### export
-# devtools::use_package("writexl",Imports")

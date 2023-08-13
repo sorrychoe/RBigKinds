@@ -113,7 +113,7 @@ keyword_dataframe_no_duplicated <- function(df) {
 #' @examples
 #' data <- tfidf(df)
 #' view(data)
-#' @import tf
+#' @import tm
 #' @import tibble
 #' @import dplyr
 #' @import tidytext
@@ -129,7 +129,7 @@ tfidf <- function(df) {
   }
 }
 
-#' tfidf
+#' tfidf_vector
 #'
 #' tfidf vector로 변환합니다.
 #' 
@@ -138,7 +138,7 @@ tfidf <- function(df) {
 #' @examples
 #' data <- tfidf_vector(df)
 #' view(data)
-#' @import tf
+#' @import tm
 #' @import tibble
 #' @import dplyr
 #' @import tidytext

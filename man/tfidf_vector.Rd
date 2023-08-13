@@ -2,7 +2,7 @@
 % Please edit documentation in R/global.R
 \name{tfidf_vector}
 \alias{tfidf_vector}
-\title{tfidf}
+\title{tfidf_vector}
 \usage{
 tfidf_vector(df)
 }
