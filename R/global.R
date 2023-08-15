@@ -1,123 +1,176 @@
-#' [] 표시된 헤더 삭제
+#' header_remover
 #'
+#' 상단에 존재하는 헤더를 제거합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- header_remover(df)
+#' head(data)
 #' @export
 header_remover <- function(df) {
   if (is.data.frame(df)) {
     ans <- gsub("\\[[^)]*\\]", "", df$`제목`)
     df$`제목` <- ans
     return(df)
-  } else if (is.list(df)) {
-    ans <- gsub("\\[[^)]*\\]", "", df)
-    return(ans)
   } else {
     stop("input value is to be have to list or DataFrame")
   }
 }
 
-#' 키워드를 list로 변환
+#' word_tokenizer
 #'
+#' 파일로부터 문서 별 키워드로 나열된 데이터 프레임으로 변환합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- word_tokenizer(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
-keyword_list <- function(df) {
+word_tokenizer <- function(df) {
   if (is.data.frame(df)) {
-    return(df$`키워드`)
-  } else if (is.list(df)) {
-    return(df)
+    df |> 
+      select(`제목`,`키워드`) |> 
+      rowid_to_column() |> 
+      unnest_tokens(
+        input = "키워드",
+        output = "키워드"
+      ) -> keywords
+    return(keywords)
   } else {
     stop("input value is to be have to list or DataFrame")
   }
 }
 
-#' [] 키워드 파싱
+
+#' keyword_dataframe
 #'
+#' BigKinds 데이터 셋을 키워드 갯수 데이터프레임으로 변환합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- keyword_dataframe(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
-keyword_parser <- function(text_list) {
-  if (is.list(text_list)) {
-    news_key <- list()
-    for (word in text_list) {
-      if (is.character(word)) {
-        word <- strsplit(word, ",")[[1]]
-        news_key <- c(news_key, list(word))
-      } else {
-        stop("input list is not valid format")
-      }
-    }
-    return(news_key)
+keyword_dataframe <- function(df) {
+  if (is.data.frame(df)) {
+    data <- word_tokenizer(df) 
+    data |> 
+      group_by(키워드) |> 
+      tally() |> 
+      arrange(desc(n)) |> 
+      as_tibble() -> keywords
+    return(keywords)
   } else {
-    stop("input type is to be have to list")
+    stop("input type is to be have to DataFrame")
   }
 }
 
-#' 중복 값 제거
+#' keyword_dataframe_no_duplicated
 #'
+#' BigKinds 데이터 셋을 키워드 갯수 데이터프레임(중복 미포함)으로 변환합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- keyword_dataframe_no_duplicated(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
 #' @export
-duplication_remover <- function(news_key) {
-  if (is.list(news_key)) {
-    news_value <- list()
-    for (j in news_key) {
-      if (is.list(j)) {
-        j <- unique(j)
-        news_value <- c(news_value, list(j))
-      } else {
-        stop("input list is not valid format")
-      }
-    }
-    return(news_value)
+keyword_dataframe_no_duplicated <- function(df) {
+  if (is.data.frame(df)) {
+    data <- word_tokenizer(df) 
+    
+    keywords_no_duplicated <- data[!duplicated(data[,c(2,3)]),]
+    
+    keywords_no_duplicated |> 
+      group_by(키워드) |> 
+      tally() |> 
+      arrange(desc(n)) |> 
+      as_tibble() -> return_keywords
+    return(return_keywords)
   } else {
-    stop("input type is to be have to list")
+    stop("input type is to be have to DataFrame")
   }
 }
 
-#' 단어 갯수 카운트
+#' tfidf
 #'
+#' 키워드의 tfidf score를 포함한 데이터 프레임을 반환합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- tfidf(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
+#' @import tidytext
 #' @export
-word_counter <- function(news_value) {
-  if (is.list(news_value)) {
-    key_words <- list()
-    for (k in seq_along(news_value)) {
-      for (i in news_value[[k]]) {
-        if (!(i %in% names(key_words))) {
-          key_words[[i]] <- 1
-        } else {
-          key_words[[i]] <- key_words[[i]] + 1
-        }
-      }
-    }
-    return(key_words)
+tfidf <- function(df) {
+  if (is.data.frame(df)) {
+    data <- word_tokenizer(df) 
+    data |>
+      bind_tf_idf(term = `키워드`, document = `제목`, n = rowid) -> tfidf
+    return(tfidf)
   } else {
-    stop("input type is to be have to list")
+    stop("input type is to be have to DataFrame")
   }
 }
 
-
-#' counter dict --> dataframe
+#' tfidf_vector
 #'
+#' tfidf vector로 변환합니다.
+#' 
+#' @param df BigKinds 원본 문서
 #'
-#' @param infile Path to the input file
-#' @return A matrix of the infile
+#' @examples
+#' data <- tfidf_vector(df)
+#' view(data)
+#' @import tm
+#' @import tibble
+#' @import dplyr
+#' @import tidytext
 #' @export
-counter_to_dataframe <- function(key_words) {
-  if (is.list(key_words)) {
-    word_df <- data.frame(matrix(unlist(key_words), ncol = 2, byrow = TRUE))
-    colnames(word_df) <- c("단어", "빈도")
-    word_df <- word_df[order(word_df$`빈도`, decreasing = TRUE), , drop = FALSE, ]
-    rownames(word_df) <- NULL
-    return(word_df)
+tfidf_vector <- function(df) {
+  if (is.data.frame(df)) {
+    data <- word_tokenizer(df) 
+    
+    dtm <- DocumentTermMatrix(Corpus(VectorSource(data$키워드)))
+    tdm <- weightTfIdf(dtm)
+    vec <- as.matrix(tdm)
+    return(vec)
   } else {
-    stop("input type is to be have to dict")
+    stop("input type is to be have to DataFrame")
   }
+}
+
+#' normalize_vector
+#'
+#' 벡터를 정규화합니다.(row 기준 minmax scaling)
+#'
+#' @param vec tfidf vector
+#'
+#' @export
+normalize_vector <- function(vec) {
+  if (is.matrix(vec)) {
+    vec_nor <- t(normalize(t(vec)))
+    return(vec_nor)
+  } else {
+    stop("input type is to be have to matrix")
+  }
+}
+normalize <- function(x, na.rm = TRUE) {
+  return((x- min(x)) /(max(x)-min(x)))
 }

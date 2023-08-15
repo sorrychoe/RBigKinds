@@ -1,10 +1,12 @@
 Package: RBigKinds
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.1.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Title: BigKinds Data Analysis Toolkit for R
+Version: 0.1.0.9000
+Authors@R: c(
+  person("Jaeseong", "Choe",, "cjssoote@gmail.com", role = c("aut", "cre"))
+  )
+Description: RBigKinds is a library for Data Analysis of BigKinds data through R.
+Author: Jaeseonc Choe [aut, cre]
+Maintainer: Jaeseong Choe <cjssoote@gmail.com>
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
