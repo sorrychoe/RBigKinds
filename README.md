@@ -11,7 +11,7 @@ RBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출한
 따라서, `devtools`을 활용해야만 다운로드가 가능합니다.
 
 ``` r
-  devtools::install_github("sorrychoe/RBigKinds")
+devtools::install_github("sorrychoe/RBigKinds")
 ```
 
 ## Usage
