@@ -1,5 +1,5 @@
 library(readxl)
-df <- read_xlsx("./test.xlsx")
+df <- read_excel("testdata/test.xlsx")
 
 # header_remover 테스트
 test_that("header_remover 함수가 헤더를 제거하는지 확인합니다.", {

@@ -1,5 +1,5 @@
 library(readxl)
-df <- read_xlsx("./test.xlsx")
+df <- read_excel("testdata/test.xlsx")
 
 # dcm 테스트
 test_that("dcm이 잘 형성되는지 확인합니다.", {
