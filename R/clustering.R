@@ -14,7 +14,7 @@ Kmeans <- function(vec, k, random_state = 123) {
   if (is.matrix(vec)) {
     set.seed(random_state)
     kmeans_model <- kmeans(vec, centers = k, iter.max = 1000)
-    return(kmeans_model$cluster)
+    return(kmeans_model)
   } else {
     stop("input type is to be have to matrix")
   }
@@ -35,34 +35,11 @@ Kmeans <- function(vec, k, random_state = 123) {
 #' @import dbscan
 #' 
 #' @export
-DBSCAN <- function(vec, eps, min_samples, metric = "euclidean") {
+DBSCAN <- function(vec, eps, min_samples) {
   if (is.matrix(vec)) {
-    dbscan_model <- dbscan::dbscan(vec, eps = eps, minPts = min_samples, method = metric)
-    return(dbscan_model$cluster)
-  } else {
-    stop("input type is to be have to matrix")
-  }
-}
-
-#' MeanShift
-#'
-#' mean shift clustering을 진행합니다.
-#' 
-#' @param df BigKinds 원본 문서
-#' @param qt quantile 값(최적 bandwidth 추정을 위함)
-#'
-#' @examples
-#' MeanShift(vec, at = 0.5)
-#' 
-#' @export
-MeanShift <- function(vec, qt = 0.25) {
-  if (is.matrix(vec)) {
-    best_bandwidth <- density(vec)$bw
-    print(paste(qt, "기준 최적 bandwidth 값:", round(best_bandwidth, 2)))
-    
-    ms_model <- meanshift(vec, bandwidth = best_bandwidth)
-    print(paste("cluster 갯수:", length(unique(ms_model))))
-    return(ms_model)
+    dbscan_model <- dbscan::dbscan(vec, eps = eps, minPts = min_samples)
+    cat(paste("cluster 갯수:", length(unique(dbscan_model$cluster))),"\n\n")
+    return(dbscan_model)
   } else {
     stop("input type is to be have to matrix")
   }
