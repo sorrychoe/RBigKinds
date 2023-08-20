@@ -11,4 +11,20 @@ NULL
 # devtools::use_package("knitr","Suggests")
 # devtools::use_package("rmarkdown","Suggests")
 # devtools::use_package("testthat","Suggests")
+# devtools::use_package("dplyr","Imports")
+# devtools::use_package("tm","Imports")
+# devtools::use_package("tibble","Imports")
+# devtools::use_package("tidytext","Imports")
 #
+# ### visualization
+# devtools::use_package("ggplot2","Imports")
+# devtools::use_package("wordcloud2","Imports")
+#
+# ### topicmodel
+# devtools::use_package("topicmodels","Imports")
+#
+# ### association
+# devtools::use_package("arules","Imports")
+#
+# ### clustering
+# devtools::use_package("dbscan","Imports")
