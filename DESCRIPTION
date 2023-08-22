@@ -20,7 +20,8 @@ Imports:
     wordcloud2,
     arules,
     dbscan,
-    topicmodels
+    topicmodels,
+    quanteda
 Suggests: 
     knitr,
     rmarkdown,
