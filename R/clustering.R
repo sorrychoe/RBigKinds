@@ -2,12 +2,12 @@
 #'
 #' kmeans clustering을 진행합니다.
 #' 
-#' @param df BigKinds 원본 문서
+#' @param vec 텍스트 벡터
 #' @param k  형성할 군집 갯수
 #' @param random_state seed 값
 #'
 #' @examples
-#' Kmeans(df, k = 3)
+#' Kmeans(vec, k = 3)
 #' 
 #' @export
 Kmeans <- function(vec, k, random_state = 123) {
@@ -24,10 +24,9 @@ Kmeans <- function(vec, k, random_state = 123) {
 #'
 #' DBSCAN 알고리즘을 진행합니다.
 #' 
-#' @param df BigKinds 원본 문서
+#' @param vec 텍스트 벡터
 #' @param eps epsilon 값(보폭)
 #' @param min_sample 최적 샘플 갯수
-#' @param metric 거리 계산 방법(default = euclidean)
 #'
 #' @examples
 #' DBSCAN(vec, eps = 0.5, min_sample = 3)

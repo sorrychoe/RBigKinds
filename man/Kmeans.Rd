@@ -7,16 +7,16 @@
 Kmeans(vec, k, random_state = 123)
 }
 \arguments{
+\item{vec}{텍스트 벡터}
+
 \item{k}{형성할 군집 갯수}
 
 \item{random_state}{seed 값}
-
-\item{df}{BigKinds 원본 문서}
 }
 \description{
 kmeans clustering을 진행합니다.
 }
 \examples{
-Kmeans(df, k = 3)
+Kmeans(vec, k = 3)
 
 }
