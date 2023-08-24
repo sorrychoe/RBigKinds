@@ -1,0 +1,50 @@
+url: https://sorrychoe.github.io/RBigKinds/
+
+home:
+  title: BigKinds Data Analysis Toolkit for R
+
+authors:
+  Jaeseong Choe:
+    href: https://github.com/sorrychoe
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+reference:
+- title: about RBigKinds
+  desc:  RBigKinds is a library for Data Analysis of BigKinds data through R.
+  contents:
+  - RBigKinds
+- subtitle: data preprocessing
+  contents:
+  - starts_with("head")
+  - starts_with("word")
+  - starts_with("keyword")
+  - ends_with("tfidf")
+  - ends_with("vector")
+  - ends_with("normalize")
+  - ends_with("dcm")
+- subtitle: visualization
+  contents:
+  - ends_with("wordcloud")
+  - starts_with("top")
+  - ends_with("graph")
+- subtitle: representation
+  contents:
+  - ends_with("counter")
+  - ends_with("range")
+- subtitle: clustering
+  contents:
+  - ends_with("Kmeans")
+  - ends_with("DBSCAN")
+  - ends_with("model")
+- subtitle: association
+  contents:
+  - starts_with("association")
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+

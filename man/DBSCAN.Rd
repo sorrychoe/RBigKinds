@@ -7,13 +7,11 @@
 DBSCAN(vec, eps, min_samples)
 }
 \arguments{
+\item{vec}{텍스트 벡터}
+
 \item{eps}{epsilon 값(보폭)}
 
-\item{df}{BigKinds 원본 문서}
-
 \item{min_sample}{최적 샘플 갯수}
-
-\item{metric}{거리 계산 방법(default = euclidean)}
 }
 \description{
 DBSCAN 알고리즘을 진행합니다.
