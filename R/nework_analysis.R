@@ -29,6 +29,7 @@ dcm <- function(df) {
 #' @examples
 #' network_graph(dcm, 40, 1)
 #' @import quanteda
+#' @import quanteda.textplots
 #' @export
 network_graph <- function(dcm, topwords = 50, min_freq=0.5){
   if (topwords > 50){
