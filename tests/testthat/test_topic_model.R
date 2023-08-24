@@ -1,5 +1,5 @@
 library(readxl)
-df <- read_xlsx("./test.xlsx")
+df <- read_excel("testdata/test.xlsx")
 
 # topic_models 테스트
 test_that("lda 함수가 정상적으로 수행하는지 확인합니다.", {
