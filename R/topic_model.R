@@ -12,9 +12,9 @@
 #' @import dplyr
 #' @import tm
 #' @export
-topic_modeling <- function(dataframe, k, method="Gibbs") {
-  if (is.data.frame(dataframe)) {
-    data <- word_tokenizer(dataframe)
+topic_modeling <- function(df, k, method="Gibbs") {
+  if (is.data.frame(df)) {
+    data <- word_tokenizer(df)
     data <- data |> 
       count(키워드, 제목) |> 
       tidytext::cast_dtm(제목, 키워드, n)
@@ -22,6 +22,6 @@ topic_modeling <- function(dataframe, k, method="Gibbs") {
     
     return(model)
   } else {
-    stop("input type is to be have to DataFrame")
+    stop("input type is to be have to dataframe")
   }
 }

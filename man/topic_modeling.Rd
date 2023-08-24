@@ -4,12 +4,12 @@
 \alias{topic_modeling}
 \title{topic_modeling}
 \usage{
-topic_modeling(dataframe, k, method = "Gibbs")
+topic_modeling(df, k, method = "Gibbs")
 }
 \arguments{
-\item{k}{토픽 개수}
-
 \item{df}{BigKinds 원본 문서}
+
+\item{k}{토픽 개수}
 }
 \description{
 토픽 모델링을 시행합니다.

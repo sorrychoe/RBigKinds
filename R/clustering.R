@@ -4,16 +4,17 @@
 #' 
 #' @param vec 텍스트 벡터
 #' @param k  형성할 군집 갯수
+#' @param max 최대 반복 횟수
 #' @param random_state seed 값
 #'
 #' @examples
-#' Kmeans(vec, k = 3)
+#' Kmeans(vec, k = 3, max = 5000)
 #' 
 #' @export
-Kmeans <- function(vec, k, random_state = 123) {
+Kmeans <- function(vec, k, max = 1000, random_state = 123) {
   if (is.matrix(vec)) {
     set.seed(random_state)
-    kmeans_model <- kmeans(vec, centers = k, iter.max = 1000)
+    kmeans_model <- kmeans(vec, centers = k, iter.max = max)
     return(kmeans_model)
   } else {
     stop("input type is to be have to matrix")

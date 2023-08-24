@@ -4,12 +4,14 @@
 \alias{Kmeans}
 \title{Kmeans}
 \usage{
-Kmeans(vec, k, random_state = 123)
+Kmeans(vec, k, max = 1000, random_state = 123)
 }
 \arguments{
 \item{vec}{텍스트 벡터}
 
 \item{k}{형성할 군집 갯수}
+
+\item{max}{최대 반복 횟수}
 
 \item{random_state}{seed 값}
 }
@@ -17,6 +19,6 @@ Kmeans(vec, k, random_state = 123)
 kmeans clustering을 진행합니다.
 }
 \examples{
-Kmeans(vec, k = 3)
+Kmeans(vec, k = 3, max = 5000)
 
 }
