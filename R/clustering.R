@@ -20,7 +20,8 @@
 #' 
 #' vec <- tfidf_vector(df)
 #' 
-#' Kmeans(vec, k = 3, max = 5000)
+#' cluster <- Kmeans(vec, k = 3, max = 1000)
+#' cluster$cluster
 #' 
 #' @export
 Kmeans <- function(vec, k, max = 1000, random_state = 123) {
@@ -54,7 +55,8 @@ Kmeans <- function(vec, k, max = 1000, random_state = 123) {
 #' 
 #' vec <- tfidf_vector(df)
 #' 
-#' DBSCAN(vec, eps = 0.5, min_sample = 3)
+#' vec <- tfidf_vector(df)
+#' cluster <- DBSCAN(vec, eps = 0.1, min_sample = 2)
 #' 
 #' @import dbscan
 #' 

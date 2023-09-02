@@ -46,7 +46,7 @@ header_remover <- function(df) {
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
 #' data <- word_tokenizer(df)
-#' 
+#' head(data)
 #' 
 #' @import tm
 #' @import tibble
@@ -85,7 +85,9 @@ word_tokenizer <- function(df) {
 #'   "키워드" = c("경찰,해산명령,민주,노총,도심,집회,해산,명령,민주노총",
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
+#'                 
 #' data <- keyword_dataframe(df)
+#' head(data)
 #' 
 #' @import tm
 #' @import tibble
@@ -122,7 +124,9 @@ keyword_dataframe <- function(df) {
 #'   "키워드" = c("경찰,해산명령,민주,노총,도심,집회,해산,명령,민주노총",
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
+#'                 
 #' data <- keyword_dataframe_no_duplicated(df)
+#' head(data)
 #' 
 #' @import tm
 #' @import tibble
@@ -162,7 +166,9 @@ keyword_dataframe_no_duplicated <- function(df) {
 #'   "키워드" = c("경찰,해산명령,민주,노총,도심,집회,해산,명령,민주노총",
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
+#'                 
 #' data <- tfidf(df)
+#' head(data)
 #' 
 #' @import tm
 #' @import tibble
@@ -197,8 +203,9 @@ tfidf <- function(df) {
 #'   "키워드" = c("경찰,해산명령,민주,노총,도심,집회,해산,명령,민주노총",
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
+#'                 
 #' data <- tfidf_vector(df)
-#' 
+#' head(data)
 #' 
 #' @import tm
 #' @import tibble
@@ -225,7 +232,7 @@ tfidf_vector <- function(df) {
 #'
 #' @param vec tfidf vector
 #' 
-#' @example
+#' @examples
 #' df <- data.frame(
 #'   "일자" = c(20230101, 20230102, 20230103),
 #'   "언론사" = c("조선일보", "한겨례", "경향신문"),
@@ -235,8 +242,10 @@ tfidf_vector <- function(df) {
 #'   "키워드" = c("경찰,해산명령,민주,노총,도심,집회,해산,명령,민주노총",
 #'                 "한반도,긴장,북한,규탄,군사,정찰,위성,발사,북한,인공위성",
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
+#'                 
 #' data <- tfidf_vector(df)
 #' nor_data <- normalize_vector(data)
+#' head(data)
 #'
 #' @export
 normalize_vector <- function(vec) {

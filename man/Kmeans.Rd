@@ -31,6 +31,7 @@ df <- data.frame(
 
 vec <- tfidf_vector(df)
 
-Kmeans(vec, k = 3, max = 5000)
+cluster <- Kmeans(vec, k = 3, max = 1000)
+cluster$cluster
 
 }

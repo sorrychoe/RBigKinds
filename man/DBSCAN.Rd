@@ -29,6 +29,7 @@ df <- data.frame(
 
 vec <- tfidf_vector(df)
 
-DBSCAN(vec, eps = 0.5, min_sample = 3)
+vec <- tfidf_vector(df)
+cluster <- DBSCAN(vec, eps = 0.1, min_sample = 2)
 
 }
