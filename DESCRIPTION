@@ -1,6 +1,6 @@
 Package: RBigKinds
 Title: BigKinds Data Analysis Toolkit for R
-Version: 0.4.0.9000
+Version: 0.4.2.9000
 Authors@R: c(
   person("Jaeseong", "Choe",, "cjssoote@gmail.com", role = c("aut", "cre"))
   )
