@@ -16,6 +16,7 @@
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
 #' 
 #' dfm <- dcm(df)
+#' head(dfm)
 #' 
 #' @export
 dcm <- function(df) {
