@@ -28,7 +28,7 @@ reference:
 - subtitle: visualization
   contents:
   - ends_with("wordcloud")
-  - starts_with("top_")
+  - ends_with("words")
   - ends_with("graph")
 - subtitle: representation
   contents:
