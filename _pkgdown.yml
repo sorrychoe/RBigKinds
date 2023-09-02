@@ -38,7 +38,7 @@ reference:
   contents:
   - ends_with("Kmeans")
   - ends_with("DBSCAN")
-  - ends_with("model")
+  - ends_with("modeling")
 - subtitle: association
   contents:
   - starts_with("association")
