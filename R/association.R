@@ -21,8 +21,7 @@
 #' 
 #' association(df, min_support = 0.1, minlen = 2, maxlen = 10)
 #' 
-#' @import arules
-#' @import tm
+#' @importFrom arules apriori inspect 
 #' 
 #' @export
 association <- function(df, min_support = 0.5, minlen=2, maxlen = 10) {
