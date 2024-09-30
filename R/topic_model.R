@@ -20,7 +20,6 @@
 #'
 #' @import topicmodels
 #' @import dplyr
-#' @import tm
 #' 
 #' @export
 topic_modeling <- function(df, k, method="Gibbs") {

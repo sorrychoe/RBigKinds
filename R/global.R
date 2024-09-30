@@ -48,7 +48,7 @@ header_remover <- function(df) {
 #' data <- word_tokenizer(df)
 #' head(data)
 #' 
-#' @import tm
+#' @importFrom tidytext unnest_tokens
 #' @import tibble
 #' @import dplyr
 #' 
@@ -89,7 +89,6 @@ word_tokenizer <- function(df) {
 #' data <- keyword_dataframe(df)
 #' head(data)
 #' 
-#' @import tm
 #' @import tibble
 #' @import dplyr
 #' 
@@ -128,7 +127,6 @@ keyword_dataframe <- function(df) {
 #' data <- keyword_dataframe_no_duplicated(df)
 #' head(data)
 #' 
-#' @import tm
 #' @import tibble
 #' @import dplyr
 #' 
@@ -170,10 +168,9 @@ keyword_dataframe_no_duplicated <- function(df) {
 #' data <- tfidf(df)
 #' head(data)
 #' 
-#' @import tm
 #' @import tibble
 #' @import dplyr
-#' @import tidytext
+#' @importFrom tidytext bind_tf_idf
 #' 
 #' @export
 tfidf <- function(df) {
@@ -207,10 +204,9 @@ tfidf <- function(df) {
 #' data <- tfidf_vector(df)
 #' head(data)
 #' 
-#' @import tm
+#' @importFrom tm DocumentTermMatrix weightTfIdf Corpus VectorSource
 #' @import tibble
 #' @import dplyr
-#' @import tidytext
 #' 
 #' @export
 tfidf_vector <- function(df) {

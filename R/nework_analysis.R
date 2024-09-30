@@ -38,8 +38,8 @@ dcm <- function(df) {
 #' @param topwords feature 단어 갯수, 최대 50개까지 가능
 #' @param min_freq 그래프를 형성할 연결 최소 빈도 수
 #' 
-#' @import quanteda
-#' @import quanteda.textplots
+#' @importFrom quanteda fcm as.dfm topfeatures fcm_select
+#' @importFrom quanteda.textplots textplot_network
 #' 
 #' @export
 network_graph <- function(dcm, topwords = 50, min_freq=0.5){
