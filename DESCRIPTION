@@ -1,17 +1,20 @@
 Package: RBigKinds
 Title: BigKinds Data Analysis Toolkit for R
-Version: 0.5.1.9000
-Authors@R: c(
-  person("Jaeseong", "Choe", "cjssoote@gmail.com", role = c("aut", "cre"))
-  )
-Description: RBigKinds is a library for Data Analysis of BigKinds data through R.
-Author: Jaeseonc Choe [aut, cre]
-Maintainer: Jaeseong Choe <cjssoote@gmail.com>
+Version: 0.5.2
+Authors@R:
+  person("Jaeseong", "Choe", email = "cjssoote@gmail.com", role = c("aut", "cre"))
+Description: Provides a low-code toolkit for analysing news article data
+    exported from BigKinds, the Korean news big-data service, including
+    keyword frequency, TF-IDF, clustering, topic modelling, association
+    rules and co-occurrence network analysis.
 License: MIT + file LICENSE
+URL: https://sorrychoe.github.io/RBigKinds/, https://github.com/sorrychoe/RBigKinds
+BugReports: https://github.com/sorrychoe/RBigKinds/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
-Imports: 
+Depends:
+    R (>= 4.2)
+Imports:
     dplyr,
     ggplot2,
     tibble,
@@ -22,11 +25,13 @@ Imports:
     dbscan,
     topicmodels,
     quanteda,
-    quanteda.textplots
-Suggests: 
+    quanteda.textplots,
+    methods
+Suggests:
     knitr,
     rmarkdown,
     readxl,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.0

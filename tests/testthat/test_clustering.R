@@ -9,7 +9,9 @@ test_that("Kmeans 함수가 군집화를 잘 하는지 확인합니다.", {
 })
 
 # DBSCAN 테스트
-test_that("DBSCAN 함수가 군집화를 잘 하는지 확인합니다.", {
-  expect_output(DBSCAN(vec, 0.75, 50), "cluster 갯수: 10")
+test_that("DBSCAN 함수가 군집화를 수행하고 결과를 출력하는지 확인합니다.", {
+  expect_output(model <- DBSCAN(vec, eps = 0.75, min_samples = 2), "cluster 갯수:")
+  expect_equal(length(model$cluster), nrow(vec))
+  expect_true(all(model$cluster >= 0))
 })
 

@@ -12,7 +12,7 @@
 keywords_wordcloud <- function(df, press=NA) {
   if (is.data.frame(df)) {
     if (!is.na(press)){
-      df <- df |> filter(언론사 == press)
+      df <- df |> filter(.data[[.rb_col_press]] == press)
     }
     words <- keyword_dataframe(df)
     wordcloud2(words)

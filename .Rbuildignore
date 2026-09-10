@@ -3,3 +3,10 @@
 ^LICENSE\.md$
 ^doc$
 ^Meta$
+^\.github$
+^\.gitignore$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^data/president_lee_2026_08\.xlsx$

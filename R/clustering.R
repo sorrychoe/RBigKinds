@@ -19,10 +19,11 @@
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
 #' 
 #' vec <- tfidf_vector(df)
-#' 
-#' cluster <- Kmeans(vec, k = 3, max = 1000)
+#'
+#' cluster <- Kmeans(vec, k = 2, max = 1000)
 #' cluster$cluster
-#' 
+#'
+#' @importFrom stats kmeans
 #' @export
 Kmeans <- function(vec, k, max = 1000, random_state = 123) {
   if (is.matrix(vec)) {
@@ -40,7 +41,7 @@ Kmeans <- function(vec, k, max = 1000, random_state = 123) {
 #' 
 #' @param vec 텍스트 벡터
 #' @param eps epsilon 값(보폭)
-#' @param min_sample 최적 샘플 갯수
+#' @param min_samples 군집을 형성하는 최소 샘플 갯수
 #'
 #' @examples
 #' df <- data.frame(
@@ -54,17 +55,15 @@ Kmeans <- function(vec, k, max = 1000, random_state = 123) {
 #'                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
 #' 
 #' vec <- tfidf_vector(df)
-#' 
-#' vec <- tfidf_vector(df)
-#' cluster <- DBSCAN(vec, eps = 0.1, min_sample = 2)
-#' 
+#' cluster <- DBSCAN(vec, eps = 0.1, min_samples = 2)
+#'
 #' @import dbscan
 #' 
 #' @export
 DBSCAN <- function(vec, eps, min_samples) {
   if (is.matrix(vec)) {
     dbscan_model <- dbscan::dbscan(vec, eps = eps, minPts = min_samples)
-    cat(paste("cluster 갯수:", length(unique(dbscan_model$cluster))),"\n\n")
+    cat(paste0(.rb_msg_clusters, length(unique(dbscan_model$cluster))), "\n\n")
     return(dbscan_model)
   } else {
     stop("input type is to be have to matrix")

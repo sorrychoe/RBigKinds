@@ -42,8 +42,10 @@ test_that("tfidf_vector 함수가 tf-idf 벡터를 적절히 생성하는지 확
 })
 
 # normalize_vector 테스트
-test_that("normalize_vector 함수가 벡터를 정규화하는지 확인합니다.", {
+test_that("normalize_vector 함수가 행 단위 min-max scaling을 수행하는지 확인합니다.", {
   vec <- matrix(c(1, 2, 3, 4, 5, 6), ncol = 2)
   result <- normalize_vector(vec)
-  expect_equal(result[1, ], c(0, 0.6))
+  expect_equal(result[1, ], c(0, 1))
+  expect_equal(apply(result, 1, min), c(0, 0, 0))
+  expect_equal(apply(result, 1, max), c(1, 1, 1))
 })

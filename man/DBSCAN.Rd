@@ -11,7 +11,7 @@ DBSCAN(vec, eps, min_samples)
 
 \item{eps}{epsilon 값(보폭)}
 
-\item{min_sample}{최적 샘플 갯수}
+\item{min_samples}{군집을 형성하는 최소 샘플 갯수}
 }
 \description{
 DBSCAN 알고리즘을 진행합니다.
@@ -28,8 +28,6 @@ df <- data.frame(
                 "직권남용죄,남용,유감,왜냐면,이정환,민주사회,변호사모임"))
 
 vec <- tfidf_vector(df)
-
-vec <- tfidf_vector(df)
-cluster <- DBSCAN(vec, eps = 0.1, min_sample = 2)
+cluster <- DBSCAN(vec, eps = 0.1, min_samples = 2)
 
 }

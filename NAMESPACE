@@ -23,16 +23,30 @@ import(ggplot2)
 import(tibble)
 import(topicmodels)
 import(wordcloud2)
-importFrom(arules,apriori)
-importFrom(arules,inspect)
-importFrom(quanteda,as.dfm)
-importFrom(quanteda,fcm)
-importFrom(quanteda,fcm_select)
-importFrom(quanteda,topfeatures)
+importFrom(arules,
+  apriori,
+  inspect
+)
+importFrom(methods,as)
+importFrom(quanteda,
+  as.dfm,
+  fcm,
+  fcm_select,
+  topfeatures
+)
 importFrom(quanteda.textplots,textplot_network)
-importFrom(tidytext,bind_tf_idf)
-importFrom(tidytext,unnest_tokens)
-importFrom(tm,Corpus)
-importFrom(tm,DocumentTermMatrix)
-importFrom(tm,VectorSource)
-importFrom(tm,weightTfIdf)
+importFrom(stats,
+  kmeans,
+  reorder
+)
+importFrom(tidytext,
+  bind_tf_idf,
+  unnest_tokens
+)
+importFrom(tm,
+  Corpus,
+  DocumentTermMatrix,
+  VectorSource,
+  weightTfIdf
+)
+importFrom(utils,head)
