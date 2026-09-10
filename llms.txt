@@ -1,0 +1,131 @@
+# RBigKinds
+
+RBigKinds는 한국 언론의 빅데이터 저장소인 BigKinds에서 추출한 데이터를
+low-Code로 분석할 수 있게 만든 툴입니다.
+
+## Requirements
+
+- R \>= 4.2
+
+## Installation
+
+본 패키지는 아직 CRAN에 배포되지 않았습니다. 따라서, `devtools`을
+활용해야만 다운로드가 가능합니다.
+
+``` r
+
+devtools::install_github("sorrychoe/RBigKinds")
+```
+
+## Usage
+
+``` r
+
+df <- read_xlsx("data.xlsx")
+
+press_counter(df)
+
+#    언론사 기사
+#1 경향신문  938
+#2 동아일보  614
+#3 조선일보  611
+#4 중앙일보  922
+#5   한겨레  659
+```
+
+``` r
+
+data <- keyword_dataframe(df)
+
+data[1:5,]
+
+# A tibble: 5 × 2
+#  키워드     n
+#  <chr>  <int>
+#1 대통령 16518
+#2 정부    9723
+#3 윤석열  6112
+#4 일본    5882
+#5 한국    5739
+```
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## you have some issue?
+
+사용 중 문제 발생 시, [GitHub
+이슈](https://github.com/sorrychoe/RBigKinds/issues)에 등록해주세요.
+
+# Package index
+
+## about RBigKinds
+
+RBigKinds is a library for Data Analysis of BigKinds data through R.
+
+- [`RBigKinds`](https://sorrychoe.github.io/RBigKinds/reference/RBigKinds-package.md)
+  [`RBigKinds-package`](https://sorrychoe.github.io/RBigKinds/reference/RBigKinds-package.md)
+  : RBigKinds: BigKinds Data Analysis Toolkit for R
+
+### data preprocessing
+
+- [`header_remover()`](https://sorrychoe.github.io/RBigKinds/reference/header_remover.md)
+  : header_remover
+- [`word_tokenizer()`](https://sorrychoe.github.io/RBigKinds/reference/word_tokenizer.md)
+  : word_tokenizer
+- [`keyword_dataframe()`](https://sorrychoe.github.io/RBigKinds/reference/keyword_dataframe.md)
+  : keyword_dataframe
+- [`keyword_dataframe_no_duplicated()`](https://sorrychoe.github.io/RBigKinds/reference/keyword_dataframe_no_duplicated.md)
+  : keyword_dataframe_no_duplicated
+- [`keywords_wordcloud()`](https://sorrychoe.github.io/RBigKinds/reference/keywords_wordcloud.md)
+  : keywords_wordcloud
+- [`tfidf()`](https://sorrychoe.github.io/RBigKinds/reference/tfidf.md)
+  : tfidf
+- [`normalize_vector()`](https://sorrychoe.github.io/RBigKinds/reference/normalize_vector.md)
+  : normalize_vector
+- [`tfidf_vector()`](https://sorrychoe.github.io/RBigKinds/reference/tfidf_vector.md)
+  : tfidf_vector
+- [`dcm()`](https://sorrychoe.github.io/RBigKinds/reference/dcm.md) :
+  Document Co-occurrence Matrix
+
+### visualization
+
+- [`keywords_wordcloud()`](https://sorrychoe.github.io/RBigKinds/reference/keywords_wordcloud.md)
+  : keywords_wordcloud
+- [`top_words()`](https://sorrychoe.github.io/RBigKinds/reference/top_words.md)
+  : top_words
+- [`network_graph()`](https://sorrychoe.github.io/RBigKinds/reference/network_graph.md)
+  : word network
+
+### representation
+
+- [`press_counter()`](https://sorrychoe.github.io/RBigKinds/reference/press_counter.md)
+  : press_counter
+- [`day_range()`](https://sorrychoe.github.io/RBigKinds/reference/day_range.md)
+  : day_range
+
+### clustering
+
+- [`Kmeans()`](https://sorrychoe.github.io/RBigKinds/reference/Kmeans.md)
+  : Kmeans
+- [`DBSCAN()`](https://sorrychoe.github.io/RBigKinds/reference/DBSCAN.md)
+  : DBSCAN
+- [`topic_modeling()`](https://sorrychoe.github.io/RBigKinds/reference/topic_modeling.md)
+  : topic_modeling
+
+### association
+
+- [`association()`](https://sorrychoe.github.io/RBigKinds/reference/association.md)
+  : association
+
+### datasets
+
+- [`president_lee_2026_08`](https://sorrychoe.github.io/RBigKinds/reference/president_lee_2026_08.md)
+  : BigKinds sample export: news mentioning President Lee (August 2026)
+
+# Articles
+
+### All vignettes
+
+- [RBigKinds](https://sorrychoe.github.io/RBigKinds/articles/intro.md):
