@@ -42,6 +42,9 @@ reference:
 - subtitle: association
   contents:
   - starts_with("association")
+- subtitle: datasets
+  contents:
+  - has_keyword("datasets")
 
 footer:
   structure:
