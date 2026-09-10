@@ -10,7 +10,7 @@ tfidf_vector(df)
 \item{df}{BigKinds 원본 문서}
 }
 \description{
-tfidf vector로 변환합니다.
+문서(기사) 별 tfidf 행렬로 변환합니다. 각 행이 하나의 기사, 각 열이 키워드입니다.
 }
 \examples{
 df <- data.frame(

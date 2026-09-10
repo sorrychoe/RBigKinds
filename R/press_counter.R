@@ -19,8 +19,9 @@
 #' @export
 press_counter <- function(df) {
   if (is.data.frame(df)) {
-    freq <- table(df$언론사)
-    brod_df <- data.frame(언론사 = names(freq), 기사 = as.numeric(freq))
+    freq <- table(df[[.rb_col_press]])
+    brod_df <- data.frame(names(freq), as.numeric(freq))
+    colnames(brod_df) <- c(.rb_col_press, .rb_col_article)
     return(brod_df)
   } else {
     stop("input type is to be have to DataFrame")

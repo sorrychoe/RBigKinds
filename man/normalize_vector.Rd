@@ -10,7 +10,8 @@ normalize_vector(vec)
 \item{vec}{tfidf vector}
 }
 \description{
-벡터를 정규화합니다.(row 기준 minmax scaling)
+행렬을 행(row) 단위 min-max scaling으로 정규화합니다.
+각 행의 값이 [0, 1] 범위로 변환되며, 값이 모두 동일한 행은 0으로 처리됩니다.
 }
 \examples{
 df <- data.frame(

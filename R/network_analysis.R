@@ -46,7 +46,7 @@ network_graph <- function(dcm, topwords = 50, min_freq=0.5){
   if (topwords > 50){
     stop("topwords have to under 50")
   }
-  if (is.data.frame(df)) {
+  if (is.data.frame(dcm)) {
     dfm <- quanteda::as.dfm(dcm)
     news_fcm <- quanteda::fcm(dfm)
     top <- names(quanteda::topfeatures(news_fcm, topwords))

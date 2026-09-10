@@ -10,6 +10,8 @@ topic_modeling(df, k, method = "Gibbs")
 \item{df}{BigKinds 원본 문서}
 
 \item{k}{토픽 개수}
+
+\item{method}{LDA 추정 방법 ("Gibbs" 또는 "VEM"), 기본값 "Gibbs"}
 }
 \description{
 토픽 모델링을 시행합니다.

@@ -63,4 +63,4 @@ data[1:5,]
 
 ## you have some issue?
 
-사용 중 문제 발생 시, 해당 Repo issue에 등록해주세요.
+사용 중 문제 발생 시, [GitHub 이슈](https://github.com/sorrychoe/RBigKinds/issues)에 등록해주세요.

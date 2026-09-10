@@ -21,8 +21,8 @@
 #' @export
 header_remover <- function(df) {
   if (is.data.frame(df)) {
-    ans <- gsub("\\[[^)]*\\]", "", df$`제목`)
-    df$`제목` <- ans
+    ans <- gsub("\\[[^]]*\\]", "", df[[.rb_col_title]])
+    df[[.rb_col_title]] <- ans
     return(df)
   } else {
     stop("input value is to be have to list or DataFrame")
@@ -55,12 +55,12 @@ header_remover <- function(df) {
 #' @export
 word_tokenizer <- function(df) {
   if (is.data.frame(df)) {
-    df |> 
-      select(`제목`,`키워드`) |> 
-      rowid_to_column() |> 
+    df |>
+      select(all_of(c(.rb_col_title, .rb_col_keyword))) |>
+      rowid_to_column() |>
       unnest_tokens(
-        input = "키워드",
-        output = "키워드"
+        input = !!sym(.rb_col_keyword),
+        output = !!sym(.rb_col_keyword)
       ) -> keywords
     return(keywords)
   } else {
@@ -95,11 +95,11 @@ word_tokenizer <- function(df) {
 #' @export
 keyword_dataframe <- function(df) {
   if (is.data.frame(df)) {
-    data <- word_tokenizer(df) 
-    data |> 
-      group_by(키워드) |> 
-      tally() |> 
-      arrange(desc(n)) |> 
+    data <- word_tokenizer(df)
+    data |>
+      group_by(.data[[.rb_col_keyword]]) |>
+      tally() |>
+      arrange(desc(n)) |>
       as_tibble() -> keywords
     return(keywords)
   } else {
@@ -136,11 +136,11 @@ keyword_dataframe_no_duplicated <- function(df) {
     data <- word_tokenizer(df) 
     
     keywords_no_duplicated <- data[!duplicated(data[,c(2,3)]),]
-    
-    keywords_no_duplicated |> 
-      group_by(키워드) |> 
-      tally() |> 
-      arrange(desc(n)) |> 
+
+    keywords_no_duplicated |>
+      group_by(.data[[.rb_col_keyword]]) |>
+      tally() |>
+      arrange(desc(n)) |>
       as_tibble() -> return_keywords
     return(return_keywords)
   } else {
@@ -175,9 +175,9 @@ keyword_dataframe_no_duplicated <- function(df) {
 #' @export
 tfidf <- function(df) {
   if (is.data.frame(df)) {
-    data <- word_tokenizer(df) 
+    data <- word_tokenizer(df)
     data |>
-      bind_tf_idf(term = `키워드`, document = `제목`, n = rowid) -> tfidf
+      bind_tf_idf(term = !!sym(.rb_col_keyword), document = !!sym(.rb_col_title), n = rowid) -> tfidf
     return(tfidf)
   } else {
     stop("input type is to be have to DataFrame")
@@ -186,8 +186,8 @@ tfidf <- function(df) {
 
 #' tfidf_vector
 #'
-#' tfidf vector로 변환합니다.
-#' 
+#' 문서(기사) 별 tfidf 행렬로 변환합니다. 각 행이 하나의 기사, 각 열이 키워드입니다.
+#'
 #' @param df BigKinds 원본 문서
 #'
 #' @examples
@@ -211,9 +211,18 @@ tfidf <- function(df) {
 #' @export
 tfidf_vector <- function(df) {
   if (is.data.frame(df)) {
-    data <- word_tokenizer(df) 
-    
-    dtm <- DocumentTermMatrix(Corpus(VectorSource(data$키워드)))
+    data <- word_tokenizer(df)
+
+    docs <- vapply(
+      split(data[[.rb_col_keyword]], data$rowid),
+      paste, collapse = " ",
+      FUN.VALUE = character(1)
+    )
+
+    dtm <- DocumentTermMatrix(
+      Corpus(VectorSource(docs)),
+      control = list(wordLengths = c(1, Inf))
+    )
     tdm <- weightTfIdf(dtm)
     vec <- as.matrix(tdm)
     return(vec)
@@ -224,7 +233,8 @@ tfidf_vector <- function(df) {
 
 #' normalize_vector
 #'
-#' 벡터를 정규화합니다.(row 기준 minmax scaling)
+#' 행렬을 행(row) 단위 min-max scaling으로 정규화합니다.
+#' 각 행의 값이 \[0, 1\] 범위로 변환되며, 값이 모두 동일한 행은 0으로 처리됩니다.
 #'
 #' @param vec tfidf vector
 #' 
@@ -246,12 +256,17 @@ tfidf_vector <- function(df) {
 #' @export
 normalize_vector <- function(vec) {
   if (is.matrix(vec)) {
-    vec_nor <- t(normalize(t(vec)))
+    vec_nor <- t(apply(vec, 1, normalize))
+    dimnames(vec_nor) <- dimnames(vec)
     return(vec_nor)
   } else {
     stop("input type is to be have to matrix")
   }
 }
-normalize <- function(x, na.rm = TRUE) {
-  return((x- min(x)) /(max(x)-min(x)))
+normalize <- function(x) {
+  rng <- max(x) - min(x)
+  if (rng == 0) {
+    return(rep(0, length(x)))
+  }
+  (x - min(x)) / rng
 }

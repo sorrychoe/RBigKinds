@@ -4,6 +4,7 @@
 #' 
 #' @param df BigKinds 원본 문서
 #' @param k 토픽 개수
+#' @param method LDA 추정 방법 ("Gibbs" 또는 "VEM"), 기본값 "Gibbs"
 #'
 #' @examples
 #' df <- data.frame(
@@ -25,9 +26,9 @@
 topic_modeling <- function(df, k, method="Gibbs") {
   if (is.data.frame(df)) {
     data <- word_tokenizer(df)
-    data <- data |> 
-      count(키워드, 제목) |> 
-      tidytext::cast_dtm(제목, 키워드, n)
+    data <- data |>
+      count(!!sym(.rb_col_keyword), !!sym(.rb_col_title)) |>
+      tidytext::cast_dtm(!!sym(.rb_col_title), !!sym(.rb_col_keyword), n)
     model <- topicmodels::LDA(data, k = k, method = method)
     
     return(model)
